@@ -82,6 +82,8 @@ def pcl_callback(ros_cloud):
     axis_max = 0.4
     passthrough.set_filter_limits(axis_min, axis_max)
     cloud_filtered = passthrough.filter()
+    
+    passthrough = cloud_filtered.make_passthrough_filter()
     filter_axis = 'z'
     passthrough.set_filter_field_name(filter_axis)
     axis_min = 0.61 
@@ -99,8 +101,10 @@ def pcl_callback(ros_cloud):
 
     # TODO: Extract inliers and outliers
     inliers, coefficients = seg.segment()
-    cloud_table = cloud_table_pre.extract(inliers, negative=False)
-    cloud_objects = cloud_table_pre.extract(inliers, negative=True)
+    cloud_table = cloud_filtered.extract(inliers, negative=False)
+    cloud_objects = cloud_filtered.extract(inliers, negative=True)
+    #pcl.save(cloud_table, 'extracted_inliers.pcd')
+    #pcl.save(cloud_objects,'extracted_outliers.pcd')
 
     # TODO: Euclidean Clustering
     white_cloud = XYZRGB_to_XYZ(cloud_objects)
@@ -219,7 +223,7 @@ def pr2_mover(object_list):
         
    
     # TODO: Loop through the pick list
-    test_no = 1
+    test_no = 3
     dict_list = []
     for i in range(len(object_list_param)):
         test_scene_num = Int32()
@@ -269,7 +273,7 @@ def pr2_mover(object_list):
             print "Service call failed: %s"%e
 
     # TODO: Output your request parameters into output yaml file
-    send_to_yaml('output_' + str(test_no) + '.yaml', dict_list)
+    send_to_yaml('src/RoboND-Perception-Project/pr2_robot/config/output_' + str(test_no) + '.yaml', dict_list)
 
 
 if __name__ == '__main__':
