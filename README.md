@@ -52,13 +52,13 @@ For each of the detected object after clustering, features like histogram of hsv
 The functions responsible for feature extraction can be found in [features.py](pr2_robot/scripts/features.py)
 Once the prediction is performed, each cluster cloud is given a label.
 
-Result of prediction of world 3 is shown here
+Result of prediction of world 1 is shown here
 
 ![Objects Detection](images/Detection1.JPG)
 
 ### Classification Model Creation
 #### 1. Data Collection
-To create model, first data is collected for each object viewed with different camera angles and points clouds are stored. I created 50 different view points for each object. The script responsible for data collected is [capture_features.py](https://github.com/sankalpdayal/sensor_sticks/blob/master/scripts/capture_features.py)
+To create model, first data is collected for each object viewed with different camera angles and points clouds are stored. I created 50 different view points for each object. The script responsible for data collected is [capture_features.py](pr2_robot/scripts/capture_features.py)
 For each point cloud 2 sets of features are extracted; histogram of colors and histogram of normals. I used HSV color space and 128 sized bins. For histogram of normals also I used 129 bins.
 The functions responsible for feature extraction can be found in [features.py](pr2_robot/scripts/features.py)
 These features are stored in a [`training_set.sav`](training_set.sav) file.
@@ -69,7 +69,7 @@ Following images shows once instance when data collection was ongoing.
 
 #### 2. Model Building
 Using this training data I build a SVM classifier. The script that I used is [train_svm.py](pr2_robot/scripts/train_svm.py) 
-I tried two 3 different kernels and found `linear` performed the best with value of `C=0.1`. I used 50 fold cross validation. The performance of the classifier can be visualized in the following table.
+I tried 3 different kernels and found `linear` performed the best with value of `C=0.1`. I used 50 fold cross validation. The performance of the classifier can be visualized in the following confusion matrices.
 
 ![Confusion Matrices](images/confMat.JPG)
 
