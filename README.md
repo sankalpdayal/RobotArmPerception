@@ -1,8 +1,8 @@
-## Project: Perception Pick & Place: Perception 
+# Project: Perception Pick & Place 
 
 ---
 
-# Required Steps for a Passing Submission:
+## Milestones for the Project:
 1. Extracted features and trained an SVM model on new objects. 
 2. Wrote a ROS node and subscribed to `/pr2/world/points` topic. This topic contained noisy point cloud data.
 3. Used filtering and RANSAC plane fitting to isolate the objects of interest from the rest of the scene.
